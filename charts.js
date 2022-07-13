@@ -26,8 +26,7 @@ init();
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
-  buildCharts(newSample);
-  
+  buildCharts(newSample);  
 }
 
 // Demographics Panel 
@@ -97,3 +96,31 @@ function buildCharts(sample) {
     Plotly.newPlot("bar", barData, barLayout); 
   });
 }
+//--Buble Chart--//
+
+    // 1. Create the trace for the bubble chart.
+    var bubbleData = [{
+      x: id,
+      y: values,
+      text: label,
+      mode: 'markers',
+      marker: {
+        size: values,
+        color: id,
+        colorscale: 'plasma'
+      }
+}];
+
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+      title:"Bacterica Culture",
+      xaxis: { title: "OTU ID" },
+      hovermode: "closest",
+      showlegend: false,
+};
+
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+});
+}
+
