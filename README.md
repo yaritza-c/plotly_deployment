@@ -1,3 +1,3 @@
 ## Belly Button Biodiversity
 
- Data colleting bacteria in belly button.
+ Data collecting bacteria in belly button.
