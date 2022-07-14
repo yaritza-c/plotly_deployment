@@ -113,7 +113,7 @@ function buildCharts(sample) {
 
     // 2. Create the layout for the bubble chart.
     var bubbleLayout = {
-      title:"Bacterica Culture",
+      title:"Bacterica Cultures Per Sample",
       xaxis: { title: "OTU ID" },
       hovermode: "closest",
       showlegend: false,
@@ -121,6 +121,52 @@ function buildCharts(sample) {
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
-});
+
+//--Gauge Chart--//
+
+    // 1. Create a variable that filters the metadata array for the object with the desired sample number.
+    var metadataArray = data.metadata.filter(sampleObj => sampleObj.id == sample);
+    
+    // 2. Create a variable that holds the first sample in the metadata array.
+    var sampleFirstData = metadataArray;
+
+    // 3. Create a variable that holds the washing frequency.
+    var washingFrequency = parseFloat(metadataArray['0'].wfreq);
+    
+    // 4. Create the trace for the gauge chart.
+    var gaugeData = [
+      domain:  { x: [0, 1], y: [0, 1] },
+      value: washingFrequency,
+      type: "indicator",
+      mode: "gauge+number",
+      title: { text: "<b> Belly Button Washing Frequency</b> <br> # of Scrubs per Week" },
+      gauge: {
+        axis: { range: [null, 10], tickwidth: 2, tickcolor: "black" },
+        bar: { color: "black" },
+        steps: [
+          { range: [0, 2], color: "firebrick" },
+          { range: [2, 4], color: "darkorange" },
+          { range: [4, 6], color: "greenyellow" },
+          { range: [6, 8], color: "lightseagreen" },
+          { range: [8, 10], color: "dodgerblue" }
+        ],
+        threshold: {
+          value: washingFrequency,
+        }
+      },
+    ];
+    
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+      width: 600, 
+      height: 500, 
+      margin: { t: 0, b: 0 },
+      font: { color: "black"}
+    };
+
+    // 6. Use Plotly to plot the gauge data and layout.
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
+  });
 }
+
 
